@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">Coronavirus AR</string>
+    <string name="action_settings">Settings</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+    <string name="About">About</string>
+    <string name="about_text">This augmented reality app will let you to get know Coronavirus COVID-19 during your self-isolation. Before start help your smartphone to find a plane. After you will see white spots you will able to place your own coronaviruses inside any premises. First version offer you only opportunities to set your own coronaviruses in your house via augmented reality, force them to jump and take a photo and share it with your friends. Soon will be released new cool features - you will can to scale, move and even kick you own coronaviruses at home</string>
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+</resources>
