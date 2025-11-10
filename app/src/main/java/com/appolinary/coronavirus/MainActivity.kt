@@ -9,16 +9,16 @@ import android.graphics.*
 import android.media.MediaActionSound
 import android.net.Uri
 import android.os.*
+import com.example.coronavirusar.R
 import android.view.*
-import android.view.MotionEvent.INVALID_POINTER_ID
 import android.webkit.MimeTypeMap
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.core.view.MotionEventCompat
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 import com.google.ar.core.Anchor
@@ -27,7 +27,6 @@ import com.google.ar.sceneform.*
 import com.google.ar.sceneform.rendering.ModelRenderable
 import com.google.ar.sceneform.ux.ArFragment
 import com.google.ar.sceneform.ux.TransformableNode
-import kotlinx.android.synthetic.main.activity_main.*
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
@@ -47,12 +46,14 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        val toolbar = this.findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
 
         fragment = supportFragmentManager.findFragmentById(R.id.sceneform_fragment) as ArFragment
         mainContainer = findViewById(R.id.main_cont)
         arSceneView = fragment.arSceneView
 
+        val fab = this.findViewById<FloatingActionButton>(R.id.fab)
         fab.setOnClickListener {
             addObject(Uri.parse("scene.sfb"))
         }
@@ -84,7 +85,6 @@ class MainActivity : AppCompatActivity() {
                         return;
                     }
                     showShareSnackbar(mainContainer)
-                    //                    Toast.makeText(this@MainActivity, "Saved in /Photos", Toast.LENGTH_LONG).show();
                     return
                 } else {
                     Toast.makeText(this@MainActivity,
@@ -107,7 +107,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun sharePhoto() {
-        //        Log.d("AndreyTest", "from sharePhoto mediaFile.name = ${mediaFile.name}")
         try {
             //just remove few barriers - https://stackoverflow.com/a/48851566/8619606
             val builder: StrictMode.VmPolicy.Builder = StrictMode.VmPolicy.Builder()
@@ -121,7 +120,6 @@ class MainActivity : AppCompatActivity() {
             sharingIntent.putExtra("android.intent.extra.STREAM", Uri.fromFile(mediaFile))
             startActivity(Intent.createChooser(sharingIntent, "Share using..."))
         } catch (e: Exception) {
-            //            Log.d("AndreyTest",e.message )
         }
 
     }
@@ -129,7 +127,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun saveBitmapToDisk(bitmp: Bitmap) {
 
-        val bitmapWithWatermarks = addWatermarkstoBitmap(bitmp, WATER_MARK)
+        val bitmapWithWatermarks = addWaterMarkToBitmap(bitmp, WATER_MARK)
 
         // need to request permissions one more time during runtime
         if (ContextCompat.checkSelfPermission(this,
@@ -150,11 +148,8 @@ class MainActivity : AppCompatActivity() {
         mediaFile = File.createTempFile(prefix,  // prefix
             ".jpg",         // suffix
             storageDir      // directory
-        );
-        //        Log.d("AndreyTest", "saveBitmapToDisk mediaFile = ${mediaFile.name}")
-        // Save a file: path for use with ACTION_VIEW intents
-        //        val mCurrentPhotoPath = "file:" + mediaFile.absolutePath;
-        //        Log.d("AndreyTest", mCurrentPhotoPath);
+        )
+
         val fileOutputStream = FileOutputStream(mediaFile)
         bitmapWithWatermarks.compress(Bitmap.CompressFormat.JPEG, 70, fileOutputStream)
         fileOutputStream.flush();
@@ -167,8 +162,7 @@ class MainActivity : AppCompatActivity() {
         return current.format(formatter)
     }
 
-    //TODO TUT
-    private fun addWatermarkstoBitmap(src: Bitmap, watermark: String): Bitmap {
+    private fun addWaterMarkToBitmap(src: Bitmap, watermark: String): Bitmap {
         val w = src.width
         val h = src.height
         val result = Bitmap.createBitmap(w, h, src.config)
@@ -244,8 +238,6 @@ class MainActivity : AppCompatActivity() {
     //    override fun onTap(hitTestResult: HitTestResult?, motionEvent: MotionEvent?) {
     //        var node = hitTestResult!!.node as RotatingNode
     //        node.pullUp()
-    //        //        Log.d("AndreyTest", motionEvent!!.action.toString())
-    //
     //        //        if(motionEvent == MotionEvent.)
     //    }
 

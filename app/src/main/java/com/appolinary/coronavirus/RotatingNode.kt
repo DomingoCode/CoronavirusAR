@@ -112,7 +112,7 @@ class RotatingNode(transformationSystem: TransformationSystem) :
         rotationAnimation.setObjectValues(orientation1, orientation2, orientation3, orientation4)
 
         // Next, give it the localRotation property.
-        rotationAnimation.propertyName = "localRotation"
+        rotationAnimation.setPropertyName("localRotation")
 
         // Use Sceneform's QuaternionEvaluator.
         rotationAnimation.setEvaluator(QuaternionEvaluator())
@@ -142,7 +142,7 @@ class RotatingNode(transformationSystem: TransformationSystem) :
     private fun localPositionAnimator(vararg values: Any?): ObjectAnimator {
         return ObjectAnimator().apply {
             target = this@RotatingNode
-            propertyName = "localPosition"
+            setPropertyName("localPosition")
             duration = 250
             interpolator = LinearInterpolator()
 
@@ -166,16 +166,21 @@ class RotatingNode(transformationSystem: TransformationSystem) :
         val animation = localPositionAnimator(low, high)
 
         animation.addListener(object : Animator.AnimatorListener {
-            override fun onAnimationRepeat(animation: Animator?) {}
-            override fun onAnimationCancel(animation: Animator?) {}
+            override fun onAnimationStart(animation: Animator) {
+                position = ObjectState.MOVING_UP
+            }
 
-            override fun onAnimationEnd(animation: Animator?) {
+            override fun onAnimationEnd(animation: Animator) {
                 position = ObjectState.UP
                 animatePullDown()
             }
 
-            override fun onAnimationStart(animation: Animator?) {
-                position = ObjectState.MOVING_UP
+            override fun onAnimationCancel(animation: Animator) {
+                TODO("Not yet implemented")
+            }
+
+            override fun onAnimationRepeat(animation: Animator) {
+                TODO("Not yet implemented")
             }
 
         })
@@ -188,15 +193,20 @@ class RotatingNode(transformationSystem: TransformationSystem) :
         val animation = localPositionAnimator(high, low)
 
         animation.addListener(object : Animator.AnimatorListener {
-            override fun onAnimationRepeat(animation: Animator?) {}
-            override fun onAnimationCancel(animation: Animator?) {}
+            override fun onAnimationStart(animation: Animator) {
+                position = ObjectState.MOVING_DOWN
+            }
 
-            override fun onAnimationEnd(animation: Animator?) {
+            override fun onAnimationEnd(animation: Animator) {
                 position = ObjectState.DOWN
             }
 
-            override fun onAnimationStart(animation: Animator?) {
-                position = ObjectState.MOVING_DOWN
+            override fun onAnimationCancel(animation: Animator) {
+                TODO("Not yet implemented")
+            }
+
+            override fun onAnimationRepeat(animation: Animator) {
+                TODO("Not yet implemented")
             }
         })
         animation.start()

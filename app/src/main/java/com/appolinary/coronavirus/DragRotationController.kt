@@ -19,7 +19,6 @@ class DragRotationController(transformableNode: BaseTransformableNode, gestureRe
     }
 
     public override fun onContinueTransformation(gesture: DragGesture) {
-        Log.d("AndreyTest", "gesture = " + gesture)
         var localRotation = transformableNode.localRotation
         val rotationAmountX = gesture.delta.x * rotationRateDegrees
         val rotationDeltaX = Quaternion(Vector3.up(), rotationAmountX)
@@ -28,8 +27,4 @@ class DragRotationController(transformableNode: BaseTransformableNode, gestureRe
     }
 
     public override fun onEndTransformation(gesture: DragGesture) {}
-
-//    override fun onTap(p0: HitTestResult?, p1: MotionEvent?) {
-//        (transformableNode as RotatingNode).pullUp()
-//    }
 }
